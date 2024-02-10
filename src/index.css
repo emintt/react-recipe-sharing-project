@@ -3,66 +3,79 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+:root {
+  --syracuse-red-orange: #d45113;
+  --carrot-orange: #f9a03f;
+  --seal-brown: #441c08;
+  --prussian-blue: #003049;
+  --fire-engine-red: #d62828;
+  --orange-wheel: #f77f00;
+  --xanthous: #fcbf49;
+  --vanilla: rgb(234, 226, 183, 0.5);
+  --white: #ffffff;
   }
-  a:hover {
-    color: #747bff;
+
+  html {
+    box-sizing: border-box;
   }
-  button {
-    background-color: #f9f9f9;
+
+  body {
+    margin: 0;
+    background-color: var(--vanilla);
   }
-}
+
+  header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 6px 12px;
+    background-color: var(--white);
+  }
+
+  .nav {
+    height: 100%;
+  }
+  .nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .nav-list-item:first-child {
+    margin-right: auto;
+  }
+
+  .nav-list-item:not(:first-child) {
+    margin-left: 1em;
+  }
+
+  .nav-list-item {
+    height: 100%;
+    line-height: 3rem;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+
+  .nav-link img {
+    object-fit: contain;
+    height: 100%;
+  }
+
+
+
