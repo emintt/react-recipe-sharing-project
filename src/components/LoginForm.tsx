@@ -1,12 +1,22 @@
+import { useUserContext } from "../hooks/contextHooks";
+import { useForm } from "../hooks/formHooks";
+import { Credentials } from "../types/LocalTypes";
 
 const LoginForm = () => {
+  const {handleLogin} = useUserContext();
+  const initValues: Credentials = {username: '', password: ''};
 
+  const doLogin = async () => {
+    handleLogin(inputs as Credentials);
+  };
+
+  const {handleSubmit, handleInputChange, inputs} = useForm(doLogin, initValues);
 
   return (
     <>
       <div className=" flex flex-col items-center gap-5 my-6">
         <h3 className=" text-3xl text-center">Login</h3>
-        <form  className=" flex flex-col py-6 px-3 border rounded">
+        <form onSubmit={handleSubmit} className=" flex flex-col py-6 px-3 border rounded">
           <div className=" flex justify-between items-center">
             <label
               className=" p-3"
@@ -18,7 +28,7 @@ const LoginForm = () => {
               name="username"
               type="text"
               id="loginUsername"
-              // onChange={}
+              onChange={handleInputChange}
               autoComplete="username"
             />
           </div>
@@ -29,7 +39,7 @@ const LoginForm = () => {
                 name="password"
                 type="password"
                 id="loginpassword"
-                // onChange={}
+                onChange={handleInputChange}
                 autoComplete="current-password"
               />
           </div>
