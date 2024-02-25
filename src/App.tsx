@@ -5,6 +5,7 @@ import Create from './views/Create';
 import Profile from './views/Profile';
 import Login from './views/Login';
 import Single from './views/Single';
+import Logout from './views/Logout';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path='/single' element={<Single />} />
             <Route path='/create' element={<Create />}/>
             <Route path='/profile' element={<Profile />} />
+            <Route path='/logout' element={<Logout />} />
             <Route path='/login' element={<Login />} />
           </Route>
         </Routes>

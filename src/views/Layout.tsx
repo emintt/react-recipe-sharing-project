@@ -12,13 +12,16 @@ const Layout = () => {
               </Link>
             </li>
             <li className="nav-list-item">
-              <Link to="/create" className="nav-link">Create</Link>
+              <Link to="/create" className="nav-link">Luo Resepti</Link>
             </li>
             <li className="nav-list-item">
-              <Link to="/profile" className="nav-link">Profile</Link>
+              <Link to="/profile" className="nav-link">Profiili</Link>
             </li>
             <li className="nav-list-item">
-              <Link to="/login" className="nav-link">Login</Link>
+              <Link to="/logout" className="nav-link">Kirjaudu ulos</Link>
+            </li>
+            <li className="nav-list-item">
+              <Link to="/login" className="nav-link">Kirjaudu sisään</Link>
             </li>
           </ul>
         </nav>

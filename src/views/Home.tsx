@@ -1,6 +1,5 @@
 import RecipeRow from "../components/mediaRow";
 import { useRecipe } from "../hooks/apiHooks";
-import { RecipeItem } from "../types/DBTypes";
 
 const Home = () => {
   const {recipeArray} = useRecipe();
