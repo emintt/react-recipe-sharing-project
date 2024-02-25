@@ -69,3 +69,5 @@ const handleAutoLogin = async () => {
   );
 };
 
+export { UserProvider, UserContext };
+

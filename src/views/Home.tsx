@@ -1,4 +1,4 @@
-import RecipeRow from "../components/mediaRow";
+import RecipeRow from "../components/MediaRow";
 import { useRecipe } from "../hooks/apiHooks";
 
 const Home = () => {
