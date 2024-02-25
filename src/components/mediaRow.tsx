@@ -8,7 +8,7 @@ const RecipeRow = (props: {item: RecipeItem}) => {
     <div>
       <div>
         <a href="#">
-          <img src={item.thumbnail} alt={item.title} />
+          <img src={item.thumbnail ? item.thumbnail : "https://placehold.jp/320x240.png"} alt={item.title} />
         </a>
       </div>
       <div>

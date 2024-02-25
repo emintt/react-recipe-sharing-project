@@ -92,7 +92,7 @@ type UserWithNoPassword = Omit<UserWithLevel, 'password'>;
 
 type TokenContent = Pick<User, 'user_id'> & Pick<UserLevel, 'level_name'>;
 
-type MediaItemWithOwner = RecipeItem & Pick<User, 'username'>;
+type RecipeItemWithOwner = RecipeItem & Pick<User, 'username'>;
 
 // for upload server
 type FileInfo = {
@@ -114,6 +114,6 @@ export type {
   UserWithLevel,
   UserWithNoPassword,
   TokenContent,
-  MediaItemWithOwner,
+  RecipeItemWithOwner,
   FileInfo,
 };
