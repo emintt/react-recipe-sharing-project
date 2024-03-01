@@ -3,7 +3,7 @@ import { useUserContext } from "../hooks/contextHooks";
 
 const Layout = () => {
   const {user, handleAutoLogin} = useUserContext();
-  // check if there is a valid token when the app is load
+  // when the app is load, check if there is a valid token
   if (!user) {
     handleAutoLogin();
   }
