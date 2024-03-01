@@ -1,6 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
+import { useUserContext } from "../hooks/contextHooks";
 
 const Layout = () => {
+  const {user, handleAutoLogin} = useUserContext();
+  // check if there is a valid token when the app is load
+  if (!user) {
+    handleAutoLogin();
+  }
   return (
     <>
       <header>
