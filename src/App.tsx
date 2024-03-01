@@ -7,6 +7,7 @@ import Login from './views/Login';
 import Single from './views/Single';
 import Logout from './views/Logout';
 import { UserProvider } from './contexts/UserContext';
+import Register from './views/Register';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
               <Route path='/create' element={<Create />}/>
               <Route path='/profile' element={<Profile />} />
               <Route path='/logout' element={<Logout />} />
+              <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
             </Route>
           </Routes>

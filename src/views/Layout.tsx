@@ -27,6 +27,9 @@ const Layout = () => {
               <Link to="/logout" className="nav-link">Kirjaudu ulos</Link>
             </li>
             <li className="nav-list-item">
+              <Link to="/register" className="nav-link">Rekisteröidy</Link>
+            </li>
+            <li className="nav-list-item">
               <Link to="/login" className="nav-link">Kirjaudu sisään</Link>
             </li>
           </ul>
