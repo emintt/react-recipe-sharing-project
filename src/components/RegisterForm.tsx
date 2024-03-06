@@ -1,18 +1,24 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { useUser } from "../hooks/apiHooks";
 import { useForm } from "../hooks/formHooks";
+import { useUserContext } from "../hooks/contextHooks";
 
 
 const RegisterForm = () => {
   const initValues = {username: '', password: '', email: ''};
-
   const {postUser} = useUser();
+
+  const {handleLogin} = useUserContext();
 
   const doRegister = async () => {
     try {
       console.log(inputs);
       if (usernameAvailable && emailAvailable) {
-        await postUser(inputs);
+        const result = await postUser(inputs);
+        alert(result.message);
+        if (result.user) {
+          handleLogin({username: inputs.username, password: inputs.password});
+        }
       }
     } catch (error) {
       console.log((error as Error).message);
@@ -58,7 +64,12 @@ const RegisterForm = () => {
               onBlur={handleUsernameBlur}
               autoComplete="username"
             />
+            {!usernameAvailable ? (
+              <span>Käyttäjän nimi on jo käytössä</span>
+            ): ('')}
+
           </div>
+
           <div className=" flex justify-between">
               <label className=" p-3" htmlFor="password">Password</label>
               <input
@@ -92,6 +103,9 @@ const RegisterForm = () => {
               onBlur={handleEmailBlur}
               autoComplete="email"
             />
+            {!emailAvailable ? (
+              <span>Sähköpostiosoite on jo käytössä</span>
+            ): ('')}
           </div>
           <button className="m-3 w-1/3 rounded-md bg-slate-700 p-3 self-center" type="submit">Rekisteröidy</button>
         </form>
