@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
-import { RecipeItem, RecipeItemWithOwner, User } from "../types/DBTypes";
+import { MediaItem, MediaItemWithOwner, User } from "../types/DBTypes";
 import { Credentials } from "../types/LocalTypes";
 import { LoginResponse, UserResponse } from "../types/MessageTypes";
 
 const useRecipe = () => {
-  const [recipeArray, setRecipeArray] = useState<RecipeItemWithOwner[]>([]);
+  const [recipeArray, setRecipeArray] = useState<MediaItemWithOwner[]>([]);
   const getRecipe = async () => {
-    const recipeItems = await fetchData<RecipeItem[]>(
-      import.meta.env.VITE_RECIPE_API + '/recipe',
+    const recipeItems = await fetchData<MediaItem[]>(
+      import.meta.env.VITE_MEDIA_API + '/media',
     );
 
     const itemsWithOwner = await Promise.all(recipeItems.map( async (item) => {
       const owner = await fetchData<User>(
         import.meta.env.VITE_AUTH_API + '/users/' + item.user_id,
       );
-      const itemWithOwner:  RecipeItemWithOwner = {...item, username: owner.username};
+      const itemWithOwner:  MediaItemWithOwner = {...item, username: owner.username};
       return itemWithOwner;
     }));
 

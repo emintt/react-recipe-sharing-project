@@ -5,7 +5,7 @@ import Create from './views/Create';
 import Profile from './views/Profile';
 import Login from './views/Login';
 import Single from './views/Single';
-import Logout from './views/Logout';
+import Logout from './components/LogoutButton';
 import { UserProvider } from './contexts/UserContext';
 import Register from './views/Register';
 

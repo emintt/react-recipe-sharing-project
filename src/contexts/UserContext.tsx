@@ -26,6 +26,7 @@ const UserProvider = ({children} : {children: React.ReactNode}) => {
       }
     } catch (e) {
         console.log((e as Error).message);
+        alert((e as Error).message);
     }
 };
 

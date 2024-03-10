@@ -9,37 +9,38 @@ const Layout = () => {
   }
   return (
     <>
-      <header>
-        <nav className="nav">
-          <ul className="nav-list">
-            <li className="nav-list-item">
-              <Link to="/" className="nav-link">
-                <img src="recipe-sharing-logo-360-180.svg" alt="cook note" />
+      <header className="px-1.5 py-2 bg-white">
+        <nav className="h-full1">
+          <ul className="h-12 flex justify-end text-center uppercase font-medium tracking-wide">
+            <li className="mr-auto h-full leading-[3rem]">
+              <Link to="/" className="h-full text-center px-0 py-4">
+                <img className="h-full object-contain" src="recipe-sharing-logo-360-180.svg" alt="cook note" />
               </Link>
             </li>
-            <li className="nav-list-item">
-              <Link to="/create" className="nav-link">Luo Resepti</Link>
-            </li>
-            <li className="nav-list-item">
-              <Link to="/profile" className="nav-link">Profiili</Link>
-            </li>
-            <li className="nav-list-item">
-              <Link to="/logout" className="nav-link">Kirjaudu ulos</Link>
-            </li>
-            <li className="nav-list-item">
-              <Link to="/register" className="nav-link">Rekisteröidy</Link>
-            </li>
-            <li className="nav-list-item">
-              <Link to="/login" className="nav-link">Kirjaudu sisään</Link>
-            </li>
+            {user ? (
+              <>
+                <li className="ml-4 h-full leading-[3rem]">
+                  <Link to="/create" className="h-full text-center px-0 py-4">Luo Resepti</Link>
+                </li>
+                <li className="ml-4 h-full leading-[3rem]">
+                  <Link to="/profile" className="h-full text-center px-0 py-4">Profiili</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="ml-4 h-full leading-[3rem]">
+                  <Link to="/login" className="h-full text-center px-0 py-4">Kirjaudu sisään</Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </header>
-      <main>
+      <main className=" max-w-screen-lg m-auto px-2 py-1">
         <Outlet />
       </main>
-      <footer>
-
+      <footer className="p-2.5 bg-prussian-blue">
+        <p className=" text-white text-center">Keväät 2024</p>
       </footer>
     </>
   );

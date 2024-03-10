@@ -1,4 +1,4 @@
-import { RecipeItem, UserWithNoPassword } from './DBTypes';
+import { MediaItem, UserWithNoPassword } from './DBTypes';
 
 type MessageResponse = {
   message: string;
@@ -8,8 +8,8 @@ type ErrorResponse = MessageResponse & {
   stack?: string;
 };
 
-type RecipeResponse = MessageResponse & {
-  recipe: RecipeItem | RecipeItem[];
+type MediaResponse = MessageResponse & {
+  media: MediaItem | MediaItem[];
 };
 
 // for auth server
@@ -27,6 +27,14 @@ type UserDeleteResponse = MessageResponse & {
   user: { user_id: number };
 };
 
+type AvailableResponse = Partial<MessageResponse> & {
+  available?: boolean;
+};
+
+type BooleanResponse = MessageResponse & {
+  success: boolean;
+};
+
 // for upload server
 type UploadResponse = MessageResponse & {
   data: {
@@ -39,9 +47,11 @@ type UploadResponse = MessageResponse & {
 export type {
   MessageResponse,
   ErrorResponse,
-  RecipeResponse,
+  MediaResponse,
   LoginResponse,
   UploadResponse,
   UserResponse,
   UserDeleteResponse,
+  AvailableResponse,
+  BooleanResponse,
 };
