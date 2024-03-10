@@ -53,10 +53,13 @@ const handleAutoLogin = async () => {
           const userResponse = await getUserByToken(token);
           // set user to state
           setUser(userResponse.user);
-          // when page is refreshed, the user is redirected to origin (ProtectedRoute.tsx)
-          const origin = location.state.from.pathname || '/';
-          console.log('location', location);
-          navigate(origin);
+
+           // when page is refreshed, the user is redirected to origin (ProtectedRoute.tsx)
+           // when user in the proteccted route and refresh the page they can be redirected to the same page
+           // access the state in history state (ProtectedRoute.tsx)
+           const origin = location.state.from.pathname || '/';
+           console.log('location', location);
+           navigate(origin);
         }
     } catch (e) {
         console.log((e as Error).message);

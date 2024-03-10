@@ -9,7 +9,7 @@ const Layout = () => {
   }
   return (
     <>
-      <header className="px-1.5 py-2 bg-white">
+      <header className="px-1.5 py-2 bg-white mb-4">
         <nav className="h-full1">
           <ul className="h-12 flex justify-end text-center uppercase font-medium tracking-wide">
             <li className="mr-auto h-full leading-[3rem]">
@@ -36,7 +36,7 @@ const Layout = () => {
           </ul>
         </nav>
       </header>
-      <main className=" max-w-screen-lg m-auto px-2 py-1">
+      <main className=" max-w-screen-lg m-auto px-2 py-1 bg-white">
         <Outlet />
       </main>
       <footer className="p-2.5 bg-prussian-blue">
