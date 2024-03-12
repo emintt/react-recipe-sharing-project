@@ -95,4 +95,17 @@ const useAuthentication = () => {
   return {postLogin};
 }
 
-export {useRecipe, useAuthentication, useUser};
+const useFile = () => {
+  const postFile = async (file: File, token: string) => {
+    // create FormData object
+    const formData = new FormData();
+    console.log('form data', formData);
+    // TODO: add file to FormData
+    // TODO: upload the file to file server and get the file data
+    // TODO: return the file data. The type is UploadResponse
+  };
+
+  return {postFile};
+}
+
+export {useRecipe, useAuthentication, useUser, useFile};

@@ -8,9 +8,7 @@ const RecipeRow = (props: {item: MediaItem}) => {
     <div>
       <Link to="/single" state={item}>
         <div>
-          <a href="#">
-            <img src={item.thumbnail ? item.thumbnail : "https://placehold.jp/320x240.png"} alt={item.title} />
-          </a>
+          <img src={item.thumbnail ? item.thumbnail : "https://placehold.jp/320x240.png"} alt={item.title} />
         </div>
       </Link>
       <div>

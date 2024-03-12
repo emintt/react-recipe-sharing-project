@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useForm } from "../hooks/formHooks";
+import { useFile } from "../hooks/apiHooks";
 
 const Create = () => {
   const [file, setFile] = useState<File | null>(null);
+  const {postFile} = useFile();
 
   const initValues = {
     title: '',
@@ -12,8 +14,22 @@ const Create = () => {
     ingredients: '',
     instruction: ''
   };
-  const doCreate = () => {
+  const doCreate = async () => {
     console.log('doCreate');
+    console.log('file', file);
+
+    const token = localStorage.getItem('token');
+    if (!token || !file) {
+      return;
+    }
+    try {
+      // call postFile function (see below)
+      postFile(file, token);
+      // TODO: call postMedia function (see below)
+      // TODO: redirect to Home
+  } catch (e) {
+      console.log((e as Error).message);
+  }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,52 +38,99 @@ const Create = () => {
     }
   };
   const {handleSubmit, handleInputChange, inputs} = useForm(doCreate, initValues);
+
   return (
     <>
       <h1>Upload</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="border border-slate-700">
         <div>
-            <label htmlFor="title">Title</label>
-            <input
-                name="title"
-                type="text"
-                id="title"
-                onChange={handleInputChange}
-            />
+          <label htmlFor="title">Title</label>
+          <input
+            className="border border-slate-700"
+            name="title"
+            type="text"
+            id="title"
+            onChange={handleInputChange}
+          />
         </div>
         <div>
-            <label htmlFor="description">Description</label>
-            <textarea
-                name="description"
-                rows={5}
-                id="description"
-                onChange={handleInputChange}
-            ></textarea>
+          <label htmlFor="description">Description</label>
+          <input
+            className="border border-slate-700"
+            name="description"
+            id="description"
+            onChange={handleInputChange}
+          ></input>
+        </div>
+        <div>
+          <label htmlFor="serving">Serving</label>
+          <input
+            className="border border-slate-700"
+            name="serving"
+            type="text"
+            id="serving"
+            placeholder="4 annosta"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="cookTime">Cook time</label>
+          <input
+            className="border border-slate-700"
+            name="cookTime"
+            type="text"
+            id="cookTime"
+            placeholder="60 min"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="ingredients">Ingredients</label>
+          <textarea
+            className="border border-slate-700"
+            name="ingredients"
+            rows={5}
+            id="ingredients"
+            onChange={handleInputChange}
+          ></textarea>
+        </div>
+        <div>
+          <label htmlFor="instruction">Instruction</label>
+          <textarea
+            className="border border-slate-700"
+            name="instruction"
+            rows={5}
+            id="instruction"
+            onChange={handleInputChange}
+          ></textarea>
         </div>
         <div>
             <label htmlFor="file">File</label>
             <input
-                name="file"
-                type="file"
-                id="file"
-                accept="image/*, video/*"
+              className="border border-slate-700"
+              name="file"
+              type="file"
+              id="file"
+              accept="image/*, video/*"
             onChange={handleFileChange}
             />
         </div>
         <img
-            src={
-                file
-                ? URL.createObjectURL(file)
-                : 'https://via.placeholder.com/200?text=Choose+image'
-            }
-            alt="preview"
-            width="200"
+          className="border border-slate-700"
+          src={
+              file
+              ? URL.createObjectURL(file)
+              : 'https://via.placeholder.com/200?text=Choose+image'
+          }
+          alt="preview"
+          width="200"
         />
         <button
-            type="submit"
-            disabled={file && inputs.title.length > 3 ? false : true}
+          className="border border-slate-700"
+          type="submit"
+          // disabled={file && inputs.title.length > 3 ? false : true}
         >
-            Upload
+          Upload
         </button>
       </form>
     </>

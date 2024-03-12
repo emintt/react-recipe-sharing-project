@@ -12,6 +12,7 @@ const RegisterForm = () => {
   const {handleLogin} = useUserContext();
 
   const doRegister = async () => {
+    // console.log('do register');
     try {
       console.log(inputs);
       if (usernameAvailable && emailAvailable) {
@@ -100,7 +101,12 @@ const RegisterForm = () => {
               <span className="text-fire-engine-red">Sähköpostiosoite on jo käytössä</span>
             ): ('')}
           </div>
-          <button className="m-3 w-1/3 rounded-md bg-orange-wheel p-3 self-center hover:bg-light-orange" type="submit">Rekisteröidy</button>
+          <button
+            className="m-3 w-1/3 rounded-md bg-orange-wheel p-3 self-center hover:bg-light-orange"
+            type="submit"
+          >
+            Rekisteröidy
+          </button>
           <p className="h-full text-center px-0">
             Onko sinulla jo tili? <Link to="/login" className=" underline" >Kirjaudu sisään</Link>
           </p>
