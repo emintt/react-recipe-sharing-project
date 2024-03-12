@@ -19,9 +19,6 @@ const Create = () => {
     instruction: ''
   };
   const doCreate = async () => {
-    console.log('doCreate');
-    console.log('file', file);
-
     const token = localStorage.getItem('token');
     if (!token || !file) {
       return;
@@ -134,7 +131,7 @@ const Create = () => {
         <button
           className="border border-slate-700"
           type="submit"
-          // disabled={file && inputs.title.length > 3 ? false : true}
+          disabled={file && inputs.title.length > 3 ? false : true}
         >
           Upload
         </button>
