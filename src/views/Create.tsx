@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useForm } from "../hooks/formHooks";
-import { useFile } from "../hooks/apiHooks";
+import { useFile, useRecipe } from "../hooks/apiHooks";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [file, setFile] = useState<File | null>(null);
   const {postFile} = useFile();
+  const {postRecipe} = useRecipe();
+  const navigate = useNavigate();
+
 
   const initValues = {
     title: '',
@@ -23,18 +27,20 @@ const Create = () => {
       return;
     }
     try {
-      // call postFile function (see below)
-      postFile(file, token);
-      // TODO: call postMedia function (see below)
-      // TODO: redirect to Home
-  } catch (e) {
-      console.log((e as Error).message);
-  }
+      const fileResult = await postFile(file, token);
+      const recipeResult = await postRecipe(fileResult, inputs, token);
+      alert(recipeResult.message);
+      //redirect to Home
+      navigate('/');
+    } catch (e) {
+        console.log((e as Error).message);
+    }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-        console.log(e.target.files[0]);
+      console.log(e.target.files[0]);
+      setFile(e.target.files[0]);
     }
   };
   const {handleSubmit, handleInputChange, inputs} = useForm(doCreate, initValues);
