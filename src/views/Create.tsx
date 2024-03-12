@@ -43,32 +43,32 @@ const Create = () => {
   const {handleSubmit, handleInputChange, inputs} = useForm(doCreate, initValues);
 
   return (
-    <>
-      <h1>Upload</h1>
-      <form onSubmit={handleSubmit} className="border border-slate-700">
-        <div>
-          <label htmlFor="title">Title</label>
+    <div className="flex justify-center justify-items-center content-center">
+      {/* <h2 className="text-3xl text-center font-serif font-bold m-4">Upload</h2> */}
+      <form onSubmit={handleSubmit} className=" w-full flex flex-col p-6 border rounded bg-vanilla max-w-screen-md	 text-center">
+        <div className=" flex flex-col mb-3">
+          <label className=" text-xl font-medium" htmlFor="title">Title</label>
           <input
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="title"
             type="text"
             id="title"
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
+        <div className=" flex flex-col mb-3">
+          <label className=" text-xl font-medium" htmlFor="description">Description</label>
           <input
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="description"
             id="description"
             onChange={handleInputChange}
           ></input>
         </div>
-        <div>
-          <label htmlFor="serving">Serving</label>
+        <div className=" flex flex-col mb-3">
+          <label htmlFor="serving" className=" text-xl font-medium">Serving</label>
           <input
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="serving"
             type="text"
             id="serving"
@@ -76,10 +76,10 @@ const Create = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label htmlFor="cookTime">Cook time</label>
+        <div className=" flex flex-col mb-3">
+          <label htmlFor="cookTime" className=" text-xl font-medium">Cook time</label>
           <input
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="cookTime"
             type="text"
             id="cookTime"
@@ -87,39 +87,39 @@ const Create = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label htmlFor="ingredients">Ingredients</label>
+        <div className=" flex flex-col mb-3">
+          <label htmlFor="ingredients" className=" text-xl font-medium">Ingredients</label>
           <textarea
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="ingredients"
             rows={5}
             id="ingredients"
             onChange={handleInputChange}
           ></textarea>
         </div>
-        <div>
-          <label htmlFor="instruction">Instruction</label>
+        <div className=" flex flex-col mb-3">
+          <label htmlFor="instruction" className=" text-xl font-medium">Instruction</label>
           <textarea
-            className="border border-slate-700"
+            className="border border-slate-700 p-2 rounded"
             name="instruction"
-            rows={5}
+            rows={10}
             id="instruction"
             onChange={handleInputChange}
           ></textarea>
         </div>
-        <div>
-            <label htmlFor="file">File</label>
+        <div className=" flex flex-col mb-3">
+            <label htmlFor="file" className=" text-xl font-medium">File</label>
             <input
-              className="border border-slate-700"
+              className="border border-slate-700 p-2 rounded"
               name="file"
               type="file"
               id="file"
               accept="image/*, video/*"
-            onChange={handleFileChange}
+              onChange={handleFileChange}
             />
         </div>
         <img
-          className="border border-slate-700"
+          className="border border-slate-700 p-2 rounded"
           src={
               file
               ? URL.createObjectURL(file)
@@ -129,14 +129,14 @@ const Create = () => {
           width="200"
         />
         <button
-          className="border border-slate-700"
+          className=" w-28 h-12 my-2 rounded-md bg-orange-wheel p-3 self-center hover:bg-light-orange disabled:bg-slate-300"
           type="submit"
           disabled={file && inputs.title.length > 3 ? false : true}
         >
           Upload
         </button>
       </form>
-    </>
+    </div>
   );
 }
 
