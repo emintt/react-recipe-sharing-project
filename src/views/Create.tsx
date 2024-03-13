@@ -45,7 +45,7 @@ const Create = () => {
   return (
     <div className="flex justify-center justify-items-center content-center">
       {/* <h2 className="text-3xl text-center font-serif font-bold m-4">Upload</h2> */}
-      <form onSubmit={handleSubmit} className=" w-full flex flex-col p-6 border rounded bg-vanilla max-w-screen-md	 text-center">
+      <form onSubmit={handleSubmit} className=" w-full flex flex-col p-2 border rounded bg-vanilla max-w-screen-md sm:p-6">
         <div className=" flex flex-col mb-3">
           <label className=" text-xl font-medium" htmlFor="title">Title</label>
           <input

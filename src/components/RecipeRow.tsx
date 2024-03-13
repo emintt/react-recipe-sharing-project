@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { MediaItem } from "../types/DBTypes";
+import { MediaItemWithOwner } from "../types/DBTypes";
 
-const RecipeRow = (props: {item: MediaItem}) => {
+const RecipeRow = (props: {item: MediaItemWithOwner}) => {
   const {item} = props;
 
   return (
