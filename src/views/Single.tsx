@@ -1,6 +1,7 @@
 import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { MediaItemWithOwner } from "../types/DBTypes";
 import Likes from "../components/Likes";
+import Comments from "../components/Comments";
 
 const Single = () => {
   const {state} = useLocation();
@@ -41,7 +42,7 @@ const Single = () => {
         <p>{item.instruction}</p>
       </div>
       <Likes recipeItem={item}/>
-
+      <Comments />
       <button className=" w-28 h-12 my-2 rounded-md bg-orange-wheel p-3 self-center hover:bg-light-orange" onClick={() => {
         navigate(-1);
       }}>
