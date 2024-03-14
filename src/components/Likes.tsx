@@ -1,24 +1,28 @@
 import { useEffect, useReducer } from "react";
-import { Like, MediaItemWithOwner } from "../types/DBTypes";
+import { Like, LikeItemWithOwner, MediaItemWithOwner } from "../types/DBTypes";
 import { useLike } from "../hooks/apiHooks";
+import { useUserContext } from "../hooks/contextHooks";
 
 // likeCount: total likes of the recipe
 // useLike: object Like if user has liked, otherwise null
 type LikeState = {
   likeCount: number;
   userLike: Like | null;
+  likeList: LikeItemWithOwner[] | null;
 };
 
 // action inlcudes type and payload
 type LikeAction = {
-  type: 'setLikeCount' | 'like';
+  type: 'setLikeCount' | 'like' | 'setLikeList';
   like?: Like | null;
   likeCount?: number;
+  likeList?: LikeItemWithOwner[] | null;
 };
 
 const likeInitialState: LikeState = {
   likeCount: 0,
   userLike: null,
+  likeList: null,
 };
 
 function likeReducer(state: LikeState, action: LikeAction): LikeState {
@@ -30,6 +34,8 @@ function likeReducer(state: LikeState, action: LikeAction): LikeState {
         return {...state, userLike: action.like};
       }
       return state; // no change if action.like is undefined
+    case 'setLikeList':
+      return {...state, likeList: action.likeList ?? null};
     default:
       return state; // Return the unchanged state if the action type is not recognized
   }
@@ -42,7 +48,9 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
   const [likeState, likeDispatch] = useReducer(likeReducer, likeInitialState);
 
   const {postLike, deleteLike, getCountByMediaId, getUserLike} = useLike();
+  const {getLikeListWithOwner} = useLike();
 
+  const {user} = useUserContext();
   // get user like
   const getLike = async () => {
     const token = localStorage.getItem('token');
@@ -72,13 +80,31 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
     }
   };
 
+  const getLikeList = async () => {
+    if (!recipeItem) {
+      return;
+    }
+    try {
+      const likeListWithOwner = await getLikeListWithOwner(recipeItem.media_id);
+      console.log(likeListWithOwner);
+      likeDispatch({type: 'setLikeList', likeList: likeListWithOwner});
+    } catch (e) {
+      console.log('get like list error', (e as Error).message);
+      likeDispatch({type: 'setLikeList', likeList: null});
+    }
+  };
+
   // render likeCount and like
   useEffect(() => {
     getLikeCount();
     getLike();
+    getLikeList();
   }, [recipeItem]);
 
   const handleLike = async () => {
+    if (!user) {
+      alert('Please sign in to like recipe!');
+    }
     try {
       const token = localStorage.getItem('token');
       if (!recipeItem || !token) {
@@ -86,16 +112,20 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
       }
       // If user has liked the media, delete the like. Otherwise, post the like.
       if (likeState.userLike) {
-        // delete the like and dispatch the new like count to the state.
-        // Dispatching is already done in the getLikes and getLikeCount functions.
+        // delete the like and dispatch the new like count to the state (to update).
         await deleteLike(likeState.userLike.like_id, token);
+        likeDispatch({type: 'setLikeCount', likeCount: likeState.likeCount -1});
+        likeDispatch({type: 'like', like: null});
+        likeDispatch({type: 'setLikeList', likeList: likeState.likeList?.filter((item) => item.user_id !== likeState.userLike?.user_id)});
       } else {
         //post the like and dispatch the new like count to the state.
         // Dispatching is already done in the getLikes and getLikeCount functions.
         await postLike(recipeItem.media_id, token);
+        getLike();
+        getLikeCount();
+        getLikeList();
       }
-      getLike();
-      getLikeCount();
+
     } catch (e) {
       console.log('like error', (e as Error).message);
     }
@@ -114,7 +144,19 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
         </svg>
         <span>{likeState.likeCount}</span>
       </button>
-      <p>{likeState.userLike ? 'ja nhung ban khac da thich': ''}</p>
+      {
+      likeState.likeList && (
+        (likeState.likeList.length === 1 && likeState.userLike)
+          ? <p>You liked this</p>
+        : (likeState.likeList.length === 1 && !likeState.userLike)
+          ? <span>{likeState.likeList[0].username + ' liked this' }</span>
+        : (likeState.likeList?.length > 1)
+          ? <span>
+            {likeState.likeList.map((likeItem) => <span>{`${likeItem.username} `}</span>)}
+            <span>liked this</span>
+            </span>
+        :null)
+      }
     </div>
   );
 }

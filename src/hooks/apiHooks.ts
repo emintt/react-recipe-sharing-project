@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
-import { Like, MediaItem, MediaItemWithOwner, User, UserWithNoPassword } from "../types/DBTypes";
+import { Like, LikeItemWithOwner, MediaItem, MediaItemWithOwner, User, UserWithNoPassword } from "../types/DBTypes";
 import { Credentials } from "../types/LocalTypes";
 import { LoginResponse, MediaResponse, MessageResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
 
@@ -215,7 +215,24 @@ const useLike = () => {
     );
   };
 
-  return {postLike, deleteLike, getCountByMediaId, getUserLike};
+  const {getUserById} = useUser();
+  const getLikeListWithOwner = async (media_id: number) => {
+    // send request to /bymedia/:media_id to get like list by media
+    const getLikeListByMediaId =  await fetchData<Like[]>(
+        import.meta.env.VITE_MEDIA_API + '/likes/bymedia/' + media_id,
+    );
+
+    const likeListWithOwner = await Promise.all(getLikeListByMediaId.map(async (likeItem) => {
+      const owner = await getUserById(likeItem.user_id);
+      const likeItemWithOwner: LikeItemWithOwner = {...likeItem, username: (owner).username};
+      return likeItemWithOwner;
+    }));
+
+    return likeListWithOwner;
+  }
+
+
+  return {postLike, deleteLike, getCountByMediaId, getUserLike, getLikeListWithOwner};
 };
 
 export {useRecipe, useAuthentication, useUser, useFile, useLike};
