@@ -42,7 +42,7 @@ const Single = () => {
         <p>{item.instruction}</p>
       </div>
       <Likes recipeItem={item}/>
-      <Comments />
+      <Comments recipeItem={item} />
       <button className=" w-28 h-12 my-2 rounded-md bg-orange-wheel p-3 self-center hover:bg-light-orange" onClick={() => {
         navigate(-1);
       }}>
