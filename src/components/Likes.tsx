@@ -152,7 +152,7 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
           ? <span>{likeState.likeList[0].username + ' liked this' }</span>
         : (likeState.likeList?.length > 1)
           ? <span>
-            {likeState.likeList.map((likeItem) => <span>{`${likeItem.username} `}</span>)}
+            {likeState.likeList.map((likeItem, index) => <span key={index}>{`${likeItem.username} `}</span>)}
             <span>liked this</span>
             </span>
         :null)

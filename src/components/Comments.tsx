@@ -1,7 +1,8 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useUserContext } from "../hooks/contextHooks";
 import { useForm } from "../hooks/formHooks";
 import { Comment, MediaItemWithOwner } from "../types/DBTypes";
+import { useComment } from "../hooks/apiHooks";
 
 type CommentState = {
   comments:  Partial<Comment & {username: string;}>[] | null,
@@ -12,7 +13,7 @@ type CommentState = {
 type CommentAction = {
   type: 'setComments' | 'doComment';
   comments?: Partial<Comment & {username: string;}>[] | null;
-  userComment: Partial<Comment & {username: string;}> | null;
+  userComment?: Partial<Comment & {username: string;}> | null;
 };
 
 const commentInitialState: CommentState = {
@@ -24,7 +25,7 @@ const commentInitialState: CommentState = {
 const commentReducer = (state: CommentState, action: CommentAction): CommentState => {
   switch (action.type) {
     case 'doComment':
-      if (action.comments !== undefined) {
+      if (action.userComment !== undefined) {
         return {...state,
             userComment: action.userComment
           };
@@ -44,21 +45,51 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
   const {recipeItem} = props;
   const {user} = useUserContext();
 
+  const {getCommentsByMediaId, postComment} = useComment();
   const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
   console.log('comment state', commentState);
 
-  const initValues = {comment_text: ''};
+  const initValues =  {comment_text: ''};
 
+  const getComments = async() => {
+    if (!recipeItem) {
+      return;
+    }
+    try {
+      const comments = await getCommentsByMediaId(recipeItem.media_id);
+      console.log(comments);
+      commentDispatch({type: 'setComments', comments: comments});
+    } catch (e) {
+      console.log('get comments error', (e as Error).message);
+      commentDispatch({type: 'setComments', likeList: null});
+    }
+  }
 
-  const doComment = () => {
+  useEffect(() => {
+    getComments();
+  }, []);
+  const doComment = async () => {
     if (!user) {
       alert('Please sign in to comment!');
       return;
     }
-
+    try {
+      const token = localStorage.getItem('token');
+      if (!recipeItem || !token) {
+        return;
+      }
+      const postResponse = await postComment(inputs.comment_text, recipeItem.media_id, token);
+      const comments = await getCommentsByMediaId(recipeItem.media_id);
+      console.log(postResponse);
+      console.log(comments);
+      commentDispatch({type: 'setComments', comments: comments});
+    } catch (e) {
+      console.log('like error', (e as Error).message);
+    }
   }
 
-  const {handleSubmit, handleInputChange} = useForm(doComment, initValues);
+  const {handleInputChange, handleSubmit, inputs} = useForm(doComment, initValues);
+
   return (
     <div className=" mb-5 text-xl">
       <form
