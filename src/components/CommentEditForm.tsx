@@ -1,24 +1,29 @@
 import { useRef } from "react";
 import { useForm } from "../hooks/formHooks";
 import { useComment } from "../hooks/apiHooks";
+import { useCommentContext } from "../hooks/contextHooks";
 
-const CommentEditForm = (props: {commentId: number, commentText: string}) => {
-  const {commentId, commentText} = props;
-  console.log('props', props);
+
+const CommentEditForm = (props: {commentId: number, commentText: string, recipeId: number}) => {
+  const {commentId, commentText, recipeId} = props;
   const formRef = useRef<HTMLFormElement>(null);
   const {updateCommentById} = useComment();
+  const {getComments}= useCommentContext();
   const initValues = {
     comment_text: commentText
   }
-
 
   const doEdit = async() => {
     const token = localStorage.getItem('token');
     if (!token) {
       return;
     }
-    const EditResponse = await updateCommentById(commentId, inputs.comment_text, token);
-    console.log(EditResponse);
+    await updateCommentById(commentId, inputs.comment_text, token);
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+    // dispatch is already done in getComments function
+    getComments(recipeId);
   }
   const {handleInputChange, handleSubmit, inputs} = useForm(doEdit, initValues);
   return (
@@ -29,7 +34,7 @@ const CommentEditForm = (props: {commentId: number, commentText: string}) => {
           name="comment_text"
           type="text"
           id="comment-to-edit"
-          value={initValues.comment_text}
+          placeholder={initValues.comment_text}
           onChange={handleInputChange}
         />
         <button

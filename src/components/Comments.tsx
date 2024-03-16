@@ -1,66 +1,67 @@
-import { useEffect, useReducer, useRef } from "react";
-import { useUserContext } from "../hooks/contextHooks";
+import { useEffect, useRef } from "react";
+import { useCommentContext, useUserContext } from "../hooks/contextHooks";
 import { useForm } from "../hooks/formHooks";
 import { MediaItemWithOwner } from "../types/DBTypes";
 import { useComment } from "../hooks/apiHooks";
 import CommentEditForm from "./CommentEditForm";
 
-type CommentType =  Partial<Comment & {username: string;}>;
-type CommentState = {
-  comments:  CommentType[] | null,
-}
+// type CommentType =  Partial<Comment & {username: string;}>;
+// type CommentState = {
+//   comments:  CommentType[] | null,
+// }
 
-// action inlcudes type and payload
-type CommentAction = {
-  type: 'setComments' | 'doComment' | 'deleteComment';
-  comments?: CommentType[] | null;
-};
+// // action inlcudes type and payload
+// type CommentAction = {
+//   type: 'setComments' | 'doComment' | 'deleteComment';
+//   comments?: CommentType[] | null;
+// };
 
-const commentInitialState: CommentState = {
-  comments: [],
-}
+// const commentInitialState: CommentState = {
+//   comments: [],
+// }
 
-// action includes type and payload, payload receive data from dispatch func
-const commentReducer = (state: CommentState, action: CommentAction): CommentState => {
-  switch (action.type) {
-    case 'setComments':
-      if (action.comments !== undefined) {
-        return {...state, comments: action.comments ?? []};
-      }
-      return state;
-    default:
-      return state; // Return the unchanged state if the action type is not recognized
-  }
-};
+// // action includes type and payload, payload receive data from dispatch func
+// const commentReducer = (state: CommentState, action: CommentAction): CommentState => {
+//   switch (action.type) {
+//     case 'setComments':
+//       if (action.comments !== undefined) {
+//         return {...state, comments: action.comments ?? []};
+//       }
+//       return state;
+//     default:
+//       return state; // Return the unchanged state if the action type is not recognized
+//   }
+// };
 
 const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
+  const {commentState, commentDispatch, getComments} = useCommentContext();
   const {recipeItem} = props;
   const {user} = useUserContext();
   const formRef = useRef<HTMLFormElement>(null);
 
   const {getCommentsByMediaId, postComment, deleteCommentById} = useComment();
-  const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
+  // const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
   console.log('comment state', commentState);
 
   const initValues =  {comment_text: ''};
 
-  const getComments = async() => {
-    if (!recipeItem) {
-      return;
-    }
-    try {
-      const comments = await getCommentsByMediaId(recipeItem.media_id);
-      console.log(comments);
-      commentDispatch({type: 'setComments', comments: comments});
-    } catch (e) {
-      console.log('get comments error', (e as Error).message);
-      commentDispatch({type: 'setComments', comments: null});
-    }
-  }
+  // const getComments = async() => {
+  //   if (!recipeItem) {
+  //     return;
+  //   }
+  //   try {
+  //     const comments = await getCommentsByMediaId(recipeItem.media_id);
+  //     console.log(comments);
+  //     commentDispatch({type: 'setComments', comments: comments});
+  //   } catch (e) {
+  //     console.log('get comments error', (e as Error).message);
+  //     commentDispatch({type: 'setComments', comments: null});
+  //   }
+  // }
 
   // get comments of the recipe
   useEffect(() => {
-    getComments();
+    getComments(recipeItem.media_id);
   }, []);
 
   const deleteComment = async (comment_id: number) => {
@@ -72,7 +73,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
       const deleteResult = await deleteCommentById(comment_id, token);
       console.log(deleteResult);
       // dispatch is already done in getComments func
-      getComments();
+      getComments(recipeItem.media_id);
     } catch (e) {
       console.log('delete comment error', (e as Error).message);
       commentDispatch({type: 'setComments', comments: undefined});
@@ -89,7 +90,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
       if (!recipeItem || !token) {
         return;
       }
-      const postResponse = await postComment(inputs.comment_text, recipeItem.media_id, token);
+      await postComment(inputs.comment_text, recipeItem.media_id, token);
       const comments = await getCommentsByMediaId(recipeItem.media_id);
       if (formRef.current) {
         formRef.current.reset();
@@ -119,10 +120,10 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
                   <p>{item.comment_text}</p>
                 </div>
                 {
-                  (item.user_id === user?.user_id && item.comment_id )
+                  (item.user_id === user?.user_id && item.comment_id && item.comment_text)
                   ? <><button className=" w-16 text-orange-wheel self-start text-right"> Edit </button>
                     <button onClick={() => {deleteComment(item.comment_id as number)}} className="ml-2 w-20 text-orange-wheel self-start text-right"> Delete </button>
-                    <CommentEditForm commentId={item.comment_id} commenText={item.comment_text} />
+                    <CommentEditForm commentId={item.comment_id} commentText={item.comment_text} recipeId={recipeItem.media_id} />
                     </>
                   : null
                 }
