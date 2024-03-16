@@ -9,3 +9,6 @@ export type AuthContextType = {
   handleLogout: () => void;
   handleAutoLogin: () => void;
 };
+
+export type CommentType =  Partial<Comment & {username: string;}>;
+

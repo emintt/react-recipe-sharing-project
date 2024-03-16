@@ -276,7 +276,45 @@ const useComment = () => {
     return commentsWithUsername;
   };
 
-  return { postComment, getCommentsByMediaId };
+  const deleteCommentById = async (comment_id: number, token: string) => {
+    // Send a DELETE request to /comments/:comment_id with the
+    // token in the Authorization header.
+    const options: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+
+      },
+    };
+
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/comments/' + comment_id,
+      options,
+    );
+  };
+
+  const updateCommentById = async (
+    comment_id: number,
+    comment_text: string,
+    token: string) => {
+    // Send a POST request to /comments with the comment object
+    // and the token in the Authorization header.
+    const options: RequestInit = {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({comment_text}),
+    }
+
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/comments/' + comment_id,
+      options,
+    );
+  };
+
+  return { postComment, getCommentsByMediaId, deleteCommentById, updateCommentById };
 };
 
 export {useRecipe, useAuthentication, useUser, useFile, useLike, useComment};
