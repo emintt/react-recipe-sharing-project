@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
-import { Like, LikeItemWithOwner, MediaItem, MediaItemWithOwner, User, UserWithNoPassword } from "../types/DBTypes";
+import { Comment, Like, LikeItemWithOwner, MediaItem, MediaItemWithOwner, User, UserWithNoPassword } from "../types/DBTypes";
 import { Credentials } from "../types/LocalTypes";
 import { LoginResponse, MediaResponse, MessageResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
 

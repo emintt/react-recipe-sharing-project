@@ -1,19 +1,21 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { useUserContext } from "../hooks/contextHooks";
 import { useForm } from "../hooks/formHooks";
 import { Comment, MediaItemWithOwner } from "../types/DBTypes";
 import { useComment } from "../hooks/apiHooks";
 
+type CommentType =  Partial<Comment & {username: string;}>;
+
 type CommentState = {
-  comments:  Partial<Comment & {username: string;}>[] | null,
-  userComment: Partial<Comment & {username: string;}> | null
+  comments:  CommentType[] | null,
+  userComment: CommentType | null
 }
 
 // action inlcudes type and payload
 type CommentAction = {
   type: 'setComments' | 'doComment';
-  comments?: Partial<Comment & {username: string;}>[] | null;
-  userComment?: Partial<Comment & {username: string;}> | null;
+  comments?: CommentType[] | null;
+  userComment?: CommentType | null;
 };
 
 const commentInitialState: CommentState = {
@@ -44,6 +46,7 @@ const commentReducer = (state: CommentState, action: CommentAction): CommentStat
 const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
   const {recipeItem} = props;
   const {user} = useUserContext();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const {getCommentsByMediaId, postComment} = useComment();
   const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
@@ -61,7 +64,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
       commentDispatch({type: 'setComments', comments: comments});
     } catch (e) {
       console.log('get comments error', (e as Error).message);
-      commentDispatch({type: 'setComments', likeList: null});
+      commentDispatch({type: 'setComments', comments: null});
     }
   }
 
@@ -80,8 +83,9 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
       }
       const postResponse = await postComment(inputs.comment_text, recipeItem.media_id, token);
       const comments = await getCommentsByMediaId(recipeItem.media_id);
-      console.log(postResponse);
-      console.log(comments);
+      if (formRef.current) {
+        formRef.current.reset();
+      }
       commentDispatch({type: 'setComments', comments: comments});
     } catch (e) {
       console.log('like error', (e as Error).message);
@@ -92,14 +96,22 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
 
   return (
     <div className=" mb-5 text-xl">
-      <form
-        onSubmit={handleSubmit}
-        // ref={formRef}
-      >
+
         <h4 className=" text-2xl font-medium mb-3  text-red-950">
           <label className="" htmlFor="comment">Kommentit</label>
         </h4>
-        <div className="flex">
+        <ul className=" ml-6">
+          {(commentState.comments && commentState.comments.length > 0) && (
+            commentState.comments.map((item) => (
+              <li key={item.comment_id} className="mb-4 border px-2 py-1 w-fit rounded-xl bg-slate-100">
+                <p className=" font-medium">{item.username}
+                  <span className="text-base text-slate-500"> on {new Date(item.created_at!).toLocaleDateString()}</span>
+                </p>
+                <p>{item.comment_text}</p>
+              </li>
+          )))}
+        </ul>
+        <form onSubmit={handleSubmit} ref={formRef} className="flex  ml-6">
           <input
             className=" w-full md:w-[50rem] border border-slate-500 p-4 text-slate-950"
             name="comment_text"
@@ -114,8 +126,8 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
           >
             Post
           </button>
-        </div>
-      </form>
+        </form>
+
 
     </div>
 

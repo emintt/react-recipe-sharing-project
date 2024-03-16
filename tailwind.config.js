@@ -17,6 +17,7 @@ export default {
       },
       gridTemplateColumns: {
         'media': 'repeat(auto-fit, minmax(15rem, 1fr))',
+        'media-item': '3fr 2fr'
       }
     },
   },

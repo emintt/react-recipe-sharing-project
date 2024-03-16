@@ -13,9 +13,9 @@ const Single = () => {
     <div className=" flex flex-col p-4">
 
       {item.media_type?.includes('video') ? (
-        <video controls src="{item.filename}"></video>
+        <video controls src={item.filename}></video>
       ) : (
-        <img className="border rounded-lg" src={item.filename} alt={item.title} />
+        <img className="border rounded-lg max-h-[70vh] object-cover" src={item.filename} alt={item.title} />
       )}
       <h3 className=" text-4xl text-center font-serif font-bold m-5 text-fire-engine-red">{item.title}</h3>
       <div className=" mb-5 text-xl">
