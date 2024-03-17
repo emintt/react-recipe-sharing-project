@@ -134,7 +134,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
           {(commentState.comments && commentState.comments.length > 0) && (
             commentState.comments.map((item, index) => (
               <li key={item.comment_id} className="mb-4  border px-2 py-1 w-fit break-all rounded-xl bg-slate-100">
-                <div className=" w-5/6">
+                <div className=" w-5/6 min-w-full">
                   <p className=" font-medium">{item.username}
                     <span className="text-base text-slate-500"> on {new Date(item.created_at!).toLocaleDateString()}</span>
                   </p>
