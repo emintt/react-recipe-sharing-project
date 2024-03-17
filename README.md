@@ -1,30 +1,15 @@
-# React + TypeScript + Vite
+- [Linkki sovellukseen](http://10.120.32.50)
+- [Linkki recipe-apiin](http://10.120.32.50/media-api/api/v1)
+- [Linkki auth-apiin](http://10.120.32.50/auth-api/api/v1)
+- [Linkki upload-apiin](http://10.120.32.50/upload-api/api/v1)
+- [linkki API-dokumentaatioon]()
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sovelluksen käyttöliittymä
 
-Currently, two official plugins are available:
+![Home page](screenshots/home.png)
+![Detail page](screenshots/single-1.png)
+![Detail page](screenshots/single-1.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tietokannan kuvaus
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![Tietokannan kuvaus](screenshots/tietokannan-kuvaus.png)

@@ -11,7 +11,7 @@ const Layout = () => {
     <>
       <header className="px-1.5 py-2 bg-white mb-4">
         <nav className="h-full1">
-          <ul className="h-12 flex justify-end text-center uppercase font-medium tracking-wide">
+          <ul className="h-12 flex justify-end text-center uppercase font-medium tracking-wide text-xl">
             <li className="mr-auto h-full leading-[3rem]">
               <Link to="/" className="h-full text-center px-0 py-4">
                 <img className="h-full object-contain" src="recipe-sharing-logo-360-180.svg" alt="cook note" />
@@ -36,7 +36,7 @@ const Layout = () => {
           </ul>
         </nav>
       </header>
-      <main className=" max-w-screen-lg m-auto px-2 py-1 bg-white">
+      <main className=" max-w-screen-lg m-auto px-2 py-1 ">
         <Outlet />
       </main>
       <footer className="p-2.5 bg-prussian-blue">

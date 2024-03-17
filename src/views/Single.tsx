@@ -10,7 +10,7 @@ const Single = () => {
   const item: MediaItemWithOwner = state;
 
   return (
-    <div className=" flex flex-col p-4">
+    <div className=" flex flex-col p-4 bg-white">
 
       {item.media_type?.includes('video') ? (
         <video controls src={item.filename}></video>

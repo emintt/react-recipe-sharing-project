@@ -6,8 +6,9 @@ const RecipeRow = (props: {item: MediaItemWithOwner}) => {
   const {item} = props;
 
   return (
-    <div className="grid grid-rows-media-item">
+    <div className="grid grid-rows-media-item bg-white p-2 rounded-xl text-2xl ">
       <Link to="/single" state={item} className="">
+        <div className="m-2">{item.username}</div>
         <div className="h-full">
           <img src={item.thumbnail ? item.thumbnail : "https://placehold.jp/320x240.png"} alt={item.title}
             className=" object-cover "/>
