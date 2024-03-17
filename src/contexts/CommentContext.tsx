@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { Comment } from "../types/DBTypes";
 import { useComment } from "../hooks/apiHooks";
 
@@ -6,7 +6,10 @@ import { useComment } from "../hooks/apiHooks";
 type CommentContextType = {
   commentState: CommentState,
   commentDispatch: React.Dispatch<CommentAction>,
-  getComments: (media_id: number) => Promise<void>
+  getComments: (media_id: number) => Promise<void>,
+
+  editFormState: boolean[] | null,
+  setEditFormState:  React.Dispatch<React.SetStateAction<boolean[] >>
 }
 
 type CommentType =  Partial<Comment & {username: string;}>;
@@ -42,7 +45,17 @@ const CommentContext = createContext<CommentContextType | null>(null);
 
 const CommentProvider = ({children} : {children: React.ReactNode}) => {
   const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
+  // const editFormStateInit: boolean[] = Array(commentState.comments?.length).fill(false);
+  const [editFormState, setEditFormState] = useState<boolean[]>([]);
+  // console.log(editFormStateInit);
+  console.log(editFormState);
 
+  useEffect(() => {
+    if (commentState.comments) {
+      const editFormStateInit: boolean[] = Array(commentState.comments.length).fill(false);
+      setEditFormState(editFormStateInit);
+    }
+  }, [commentState.comments]);
   const {getCommentsByMediaId} = useComment();
   const getComments = async(media_id: number) => {
     try {
@@ -55,7 +68,7 @@ const CommentProvider = ({children} : {children: React.ReactNode}) => {
     }
   }
   return (
-    <CommentContext.Provider value={{commentState, commentDispatch, getComments}}>
+    <CommentContext.Provider value={{commentState, commentDispatch, getComments, editFormState, setEditFormState}}>
       {children}
     </CommentContext.Provider>
   );

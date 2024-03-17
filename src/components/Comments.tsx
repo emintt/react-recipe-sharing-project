@@ -34,10 +34,26 @@ import CommentEditForm from "./CommentEditForm";
 // };
 
 const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
-  const {commentState, commentDispatch, getComments} = useCommentContext();
+  const {commentState, commentDispatch, getComments, editFormState, setEditFormState} = useCommentContext();
   const {recipeItem} = props;
   const {user} = useUserContext();
   const formRef = useRef<HTMLFormElement>(null);
+
+  // handle toggle editing form
+  console.log(editFormState);
+
+  const handleToggleEditForm = (index: number) => {
+    if (!editFormState) {
+      return;
+    }
+    setEditFormState((editFormState) => {
+      const newState = [...editFormState];
+      newState[index] = !newState[index];
+      return newState;
+    })
+    console.log(editFormState);
+
+  }
 
   const {getCommentsByMediaId, postComment, deleteCommentById} = useComment();
   // const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
@@ -80,6 +96,10 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
 
     }
   };
+
+  // const toggleIsEditFormOpen = (comment_id: number) => {
+  //   const commentToBeToggled = commentState.comments?.find((comment) => { comment.comment_id === comment_id});
+  // };
   const doComment = async () => {
     if (!user) {
       alert('Please sign in to comment!');
@@ -101,17 +121,18 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
     }
   }
 
+
+  console.log(editFormState);
   const {handleInputChange, handleSubmit, inputs} = useForm(doComment, initValues);
 
   return (
     <div className=" mb-5 text-xl">
-
         <h4 className=" text-2xl font-medium mb-3  text-red-950">
           <label className="" htmlFor="comment">Kommentit</label>
         </h4>
         <ul className=" ml-6">
           {(commentState.comments && commentState.comments.length > 0) && (
-            commentState.comments.map((item) => (
+            commentState.comments.map((item, index) => (
               <li key={item.comment_id} className="mb-4  border px-2 py-1 w-fit break-all rounded-xl bg-slate-100">
                 <div className=" w-5/6">
                   <p className=" font-medium">{item.username}
@@ -121,9 +142,18 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
                 </div>
                 {
                   (item.user_id === user?.user_id && item.comment_id && item.comment_text)
-                  ? <><button className=" w-16 text-orange-wheel self-start text-right"> Edit </button>
-                    <button onClick={() => {deleteComment(item.comment_id as number)}} className="ml-2 w-20 text-orange-wheel self-start text-right"> Delete </button>
-                    <CommentEditForm commentId={item.comment_id} commentText={item.comment_text} recipeId={recipeItem.media_id} />
+                  ? <>
+                      <button onClick={() => {handleToggleEditForm(index)}} className=" w-16 text-orange-wheel self-start text-right"> Edit </button>
+                      <button
+                        onClick={() => {deleteComment(item.comment_id as number)}}
+                        className="ml-2 w-20 text-orange-wheel self-start text-right"
+                      >
+                        Delete
+                      </button>
+
+                      {((editFormState) && editFormState[index] )&&
+                        <CommentEditForm commentId={item.comment_id} commentText={item.comment_text} recipeId={recipeItem.media_id} />
+                      }
                     </>
                   : null
                 }
@@ -147,8 +177,6 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
             Post
           </button>
         </form>
-
-
     </div>
 
   );
