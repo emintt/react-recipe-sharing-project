@@ -9,7 +9,7 @@ const fetchData = async <T>(
   const json = await response.json();
   if (!response.ok) {
     const errorJson = json as unknown as ErrorResponse;
-    console.log('errorJson', errorJson);
+    // console.log('errorJson', errorJson);
     if (errorJson.message) {
       throw new Error(errorJson.message);
     }

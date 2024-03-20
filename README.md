@@ -40,6 +40,7 @@
     ![Like](screenshots/like2.png)
 
 - Kommentti
+
   - Näyttää kaikki kommentit
   - Tee kommenttia vain kirjautuneille
   - Poista oman kommentti
@@ -47,6 +48,15 @@
   - Toggle muokkauslomake
     ![Comment](screenshots/comment-1.png)
     ![Comment](screenshots/comment-2.png)
+
+- 4 eniten kommentoitua reseptiä
+  ![MostCommented](screenshots/mostcommented.png)
+
+- Päivitä receptiä
+  ![Modify](screenshots/modify.png)
+
+- Poista recepti
+  ![Delete](screenshots/delete.png)
 
 ## Referenssit
 

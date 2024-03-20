@@ -48,7 +48,7 @@ const Modify = () => {
           <input
             className="border border-slate-700 p-2 rounded"
             name="title"
-            // value={item.title || ''}
+            defaultValue={item.title || ''}
             type="text"
             id="title_edit"
             onChange={handleInputChange}
@@ -59,6 +59,7 @@ const Modify = () => {
           <input
             className="border border-slate-700 p-2 rounded"
             name="description"
+            defaultValue={item.description || ''}
             id="description_edit"
             onChange={handleInputChange}
           ></input>
@@ -68,6 +69,7 @@ const Modify = () => {
           <input
             className="border border-slate-700 p-2 rounded"
             name="serving"
+            defaultValue={item.serving || ''}
             type="text"
             id="serving_edit"
             placeholder="4 annosta"
@@ -79,6 +81,7 @@ const Modify = () => {
           <input
             className="border border-slate-700 p-2 rounded"
             name="cookTime"
+            defaultValue={item.cook_time || ''}
             type="text"
             id="cookTime_edit"
             placeholder="60 min"
@@ -90,6 +93,7 @@ const Modify = () => {
           <textarea
             className="border border-slate-700 p-2 rounded"
             name="ingredients"
+            defaultValue={item.ingredients || ''}
             rows={5}
             id="ingredients_edit"
             onChange={handleInputChange}
@@ -100,6 +104,7 @@ const Modify = () => {
           <textarea
             className="border border-slate-700 p-2 rounded"
             name="instruction"
+            defaultValue={item.instruction || ''}
             rows={10}
             id="instruction_edit"
             onChange={handleInputChange}
@@ -111,7 +116,7 @@ const Modify = () => {
           type="submit"
 
         >
-          Upload
+          Päivitä
         </button>
       </form>
     </div>

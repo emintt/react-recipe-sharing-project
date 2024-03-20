@@ -42,7 +42,6 @@ const useRecipe = () => {
     }));
 
     setMostCommentedRecipeArray(itemsWithOwner);
-    console.log(mostCommentedRecipeArray);
   }
 
   useEffect(() => {
