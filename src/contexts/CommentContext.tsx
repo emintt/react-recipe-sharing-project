@@ -45,11 +45,11 @@ const CommentContext = createContext<CommentContextType | null>(null);
 
 const CommentProvider = ({children} : {children: React.ReactNode}) => {
   const [commentState, commentDispatch] = useReducer(commentReducer, commentInitialState);
-  // const editFormStateInit: boolean[] = Array(commentState.comments?.length).fill(false);
+  //state for toggle editing form
   const [editFormState, setEditFormState] = useState<boolean[]>([]);
-  // console.log(editFormStateInit);
   console.log(editFormState);
 
+  // when the comments are loaded, set the state
   useEffect(() => {
     if (commentState.comments) {
       const editFormStateInit: boolean[] = Array(commentState.comments.length).fill(false);

@@ -62,7 +62,7 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
       likeDispatch({type: 'like', like: userLike});
     } catch (e) {
       likeDispatch({type: 'like', like: null});
-      console.log('get user like error', (e as Error).message);
+      // console.log('get user like error', (e as Error).message);
     }
   };
 
@@ -75,7 +75,7 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
       const likeResponse = await getCountByMediaId(recipeItem.media_id);
       likeDispatch({type: 'setLikeCount', likeCount: likeResponse.count});
     } catch (e) {
-      console.log('get like count error', (e as Error).message);
+      // console.log('get like count error', (e as Error).message);
       likeDispatch({type: 'setLikeCount', likeCount: 0});
     }
   };
@@ -86,10 +86,10 @@ const Likes = (props: {recipeItem: MediaItemWithOwner}) => {
     }
     try {
       const likeListWithOwner = await getLikeListWithOwner(recipeItem.media_id);
-      console.log(likeListWithOwner);
+      // console.log(likeListWithOwner);
       likeDispatch({type: 'setLikeList', likeList: likeListWithOwner});
     } catch (e) {
-      console.log('get like list error', (e as Error).message);
+      // console.log('get like list error', (e as Error).message);
       likeDispatch({type: 'setLikeList', likeList: null});
     }
   };

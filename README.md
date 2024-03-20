@@ -8,7 +8,7 @@
 
 ![Home page](screenshots/home.png)
 ![Detail page](screenshots/single-1.png)
-![Detail page](screenshots/single-1.png)
+![Detail page](screenshots/single-2.png)
 
 ## Tietokannan kuvaus
 
@@ -33,9 +33,9 @@
 
 - Tykkääminen kotisivulla ja reseptin tietosivulla
 
-  - Tykkäneet määrä
-  - Tykkää/poista tykkäys kirjautuneille
-  - Tykkäneet lista näytäminen kirjautuneille
+  - Tykkäysten määrä
+  - Tykkää/poista tykkäys vain kirjautuneille
+  - Tykättyjen listan näyttäminen kirjautuneille
     ![Like](screenshots/like.png)
     ![Like](screenshots/like2.png)
 

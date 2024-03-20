@@ -36,7 +36,7 @@ const Layout = () => {
           </ul>
         </nav>
       </header>
-      <main className=" max-w-screen-lg m-auto px-2 py-1 ">
+      <main className=" max-w-screen-lg m-auto px-2 py-1 min-h-screen">
         <Outlet />
       </main>
       <footer className="p-2.5 bg-prussian-blue">

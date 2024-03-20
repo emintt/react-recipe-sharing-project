@@ -26,6 +26,30 @@ const useRecipe = () => {
     getRecipe()
   }, []);
 
+
+  const [mostCommentedRecipeArray, setMostCommentedRecipeArray] = useState<MediaItemWithOwner[]>([]);
+  const getMostCommentedRecipe = async () => {
+    const recipeItems = await fetchData<MediaItem[]>(
+      import.meta.env.VITE_MEDIA_API + '/media/mostcommented',
+    );
+
+    const itemsWithOwner = await Promise.all(recipeItems.map( async (item) => {
+      const owner = await fetchData<User>(
+        import.meta.env.VITE_AUTH_API + '/users/' + item.user_id,
+      );
+      const itemWithOwner:  MediaItemWithOwner = {...item, username: owner.username};
+      return itemWithOwner;
+    }));
+
+    setMostCommentedRecipeArray(itemsWithOwner);
+    console.log(mostCommentedRecipeArray);
+  }
+
+  useEffect(() => {
+    getMostCommentedRecipe();
+  }, []);
+
+
   const postRecipe = async (
     file: UploadResponse,
     inputs: Record<string, string>,
@@ -59,9 +83,50 @@ const useRecipe = () => {
         import.meta.env.VITE_MEDIA_API + '/media',
         options
       );
+  };
+
+  const deleteRecipeByMediaId = async (media_id: number, token: string) => {
+    // Send a DELETE request to /media/:like_id with the
+    // token in the Authorization header.
+    const options: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+
+      },
     };
 
-  return {recipeArray, postRecipe};
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/media/' + media_id,
+      options,
+    );
+  };
+
+  const putRecipe = async (media_id: number, token:string, inputs: Record<string, string>,) => {
+    const recipe:  Pick<MediaItem, 'title' | 'description'| 'serving'| 'cook_time'| 'ingredients'| 'instruction'> = {
+      title: inputs.title,
+      description: inputs.description,
+      serving: inputs.serving,
+      cook_time: inputs.cookTime,
+      ingredients: inputs.ingredients,
+      instruction: inputs.instruction,
+    }
+    const options: RequestInit = {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recipe),
+    }
+
+    return await fetchData<MediaResponse>(
+      import.meta.env.VITE_MEDIA_API + '/media/' + media_id,
+      options,
+    );
+  };
+
+  return {postRecipe, deleteRecipeByMediaId, recipeArray, putRecipe, mostCommentedRecipeArray};
 
 }
 
