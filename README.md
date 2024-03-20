@@ -2,7 +2,7 @@
 - [Linkki recipe-apiin](http://10.120.32.50/media-api/api/v1)
 - [Linkki auth-apiin](http://10.120.32.50/auth-api/api/v1)
 - [Linkki upload-apiin](http://10.120.32.50/upload-api/api/v1)
-- [linkki API-dokumentaatioon]()
+- [linkki API-dokumentaatioon](https://users.metropolia.fi/~thitng/recipe-app-docs/index.html)
 
 ## Sovelluksen käyttöliittymä
 

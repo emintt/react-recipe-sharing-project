@@ -1,7 +1,5 @@
-import { useState } from "react";
 import RecipeRow from "../components/RecipeRow";
 import { useRecipe } from "../hooks/apiHooks";
-import { MediaItemWithOwner } from "../types/DBTypes";
 
 const Home = () => {
   const {recipeArray, mostCommentedRecipeArray} = useRecipe();
@@ -15,9 +13,12 @@ const Home = () => {
       <section>
         <h2 className=" text-3xl text-center my-3">Kommentoiduimmat Reseptit</h2>
         <div className="grid grid-cols-media gap-2">
-        {mostCommentedRecipeArray.map((item) =>
-          <RecipeRow key={item.media_id} item={item} />
-        )}
+        {mostCommentedRecipeArray ?
+            (mostCommentedRecipeArray.map((item) =>
+            <RecipeRow key={item.media_id} item={item} /> ))
+          : <p>Ei ole kommentteja saavaa reseptiä</p>
+        }
+
         </div>
       </section>
       <section>
