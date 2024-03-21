@@ -58,6 +58,13 @@
 - Poista recepti
   ![Delete](screenshots/delete.png)
 
+## Bugit
+
+- Kun deletoidaan recepti Home sivulla, vaati sivun päivitämistä, että näe muutokset.
+- Kun tykkätään receptistä esim. kommentoiduimmista reseptista osista, tykkäys näe vain siinä osassa. Sen pitää myös päivittää sivu.
+  ![Like](screenshots/like3.png)
+- Mitä voisi olla ratkaisu siihen? Kiitos!
+
 ## Referenssit
 
 https://github.com/ilkkamtk/hybridisovellukset

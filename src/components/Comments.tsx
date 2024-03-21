@@ -40,7 +40,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   // handle toggle editing form
-  console.log(editFormState);
+  // console.log(editFormState);
 
   const handleToggleEditForm = (index: number) => {
     if (!editFormState) {
@@ -51,7 +51,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
       newState[index] = !newState[index];
       return newState;
     })
-    console.log(editFormState);
+    // console.log(editFormState);
 
   }
 
@@ -122,7 +122,7 @@ const Comments = (props: {recipeItem: MediaItemWithOwner}) => {
   }
 
 
-  console.log(editFormState);
+  // console.log(editFormState);
   const {handleInputChange, handleSubmit, inputs} = useForm(doComment, initValues);
 
   return (
