@@ -1,7 +1,3 @@
-- [Linkki sovellukseen](http://10.120.32.50)
-- [Linkki recipe-apiin](http://10.120.32.50/media-api/api/v1)
-- [Linkki auth-apiin](http://10.120.32.50/auth-api/api/v1)
-- [Linkki upload-apiin](http://10.120.32.50/upload-api/api/v1)
 - [linkki API-dokumentaatioon](https://users.metropolia.fi/~thitng/recipe-app-docs/index.html)
 
 ## Sovelluksen käyttöliittymä
@@ -58,12 +54,6 @@
 - Poista recepti
   ![Delete](screenshots/delete.png)
 
-## Bugit
-
-- Kun deletoidaan recepti Home sivulla, vaati sivun päivitämistä, että näe muutokset.
-- Kun tykkätään receptistä esim. kommentoiduimmista reseptista osista, tykkäys näe vain siinä osassa. Sen pitää myös päivittää sivu.
-  ![Like](screenshots/like3.png)
-- Mitä voisi olla ratkaisu siihen? Kiitos!
 
 ## Referenssit
 
