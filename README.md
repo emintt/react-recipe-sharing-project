@@ -1,3 +1,4 @@
+ Web-sovellus, jossa käyttäjät voivat jakaa omia reseptejään, selata muiden tekemiä ruokia
 - [linkki API-dokumentaatioon](https://users.metropolia.fi/~thitng/recipe-app-docs/index.html)
 - [linkki backendiin](https://github.com/emintt/hybrid-servers-k24-recipe-project)
 
